@@ -1,0 +1,7 @@
+id,created_at,name,image,price
+1,2025-06-28T05:16:22.147240,Americano,https://fbzbfrzbfumbdnrgnnrb.supabase.co/storage/v1/object/public/coffeeimage//americano.jpg,3
+2,2025-06-28T05:16:22.147240,Cappucino,https://fbzbfrzbfumbdnrgnnrb.supabase.co/storage/v1/object/public/coffeeimage//cappuccino.jpg,3
+3,2025-06-28T05:16:22.147240,Flat White,https://fbzbfrzbfumbdnrgnnrb.supabase.co/storage/v1/object/public/coffeeimage//flatwhite.jpg,2.5
+4,2025-06-28T05:16:22.147240,Mocha,https://fbzbfrzbfumbdnrgnnrb.supabase.co/storage/v1/object/public/coffeeimage//mocha.jpg,2.8
+5,2025-06-28T05:16:22.147240,Expresso,https://fbzbfrzbfumbdnrgnnrb.supabase.co/storage/v1/object/public/coffeeimage//expresso.png,3.5
+6,2025-06-28T05:16:22.147240,Cold Brew,https://fbzbfrzbfumbdnrgnnrb.supabase.co/storage/v1/object/public/coffeeimage//coldbrew.png,3.2
