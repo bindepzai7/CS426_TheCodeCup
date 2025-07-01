@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable, Image, Dimensions } from 'react-native';
 import { Colors } from '@/constants/Colors';
+import { useAuth } from '@/context/AuthContext';
 
 type Props = {
-  points: number;
   onRedeem: () => void;
 };
 
@@ -12,7 +12,12 @@ const { width, height } = Dimensions.get('window');
 const cardWidth = 0.8 * width;
 const cardHeight = 0.13 * height;
 
-export default function PointsInfoCard({ points, onRedeem }: Props) {
+export default function PointsInfoCard({onRedeem}: Props) {
+  const { profile } = useAuth();
+  const userPoints = profile?.reward_points ?? 0;
+
+  // Ensure points is a number
+  let points = typeof userPoints === 'number' ? userPoints : 0;
   return (
     <View style={styles.card}>
       <View>

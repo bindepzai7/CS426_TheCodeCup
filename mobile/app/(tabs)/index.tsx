@@ -4,16 +4,20 @@ import LoyaltyCard from '../../components/home/loyaltyCard';
 import CoffeeMenuCard from '../../components/home/coffeeCard';
 import { Colors } from '../../constants/Colors';
 import { router } from 'expo-router';
+import { useAuth } from '@/context/AuthContext';
 
 const { width } = Dimensions.get('window');
 
 export default function App() {
+  const { profile } = useAuth();
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
         <View style={styles.greetingContainer}>
           <Text style={styles.greeting}>Good morning</Text>
-          <Text style={styles.username}>Bindepzai</Text>
+          <Text style={styles.username}>
+            {profile?.full_name || 'User'}
+          </Text>
         </View>
 
         <View style={styles.iconRow}>
@@ -26,7 +30,7 @@ export default function App() {
         </View>
       </View>
 
-      <LoyaltyCard current={3} total={8} />
+      <LoyaltyCard/>
       <CoffeeMenuCard />
     </View>
   );

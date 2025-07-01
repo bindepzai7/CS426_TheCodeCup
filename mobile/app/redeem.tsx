@@ -10,6 +10,7 @@ import { Colors } from '../constants/Colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 const { width } = Dimensions.get('window');
+import RedeemList from '../components/redeem/RedeemList';
 
 export default function CoffeeDetails() {
   return (
@@ -17,8 +18,9 @@ export default function CoffeeDetails() {
       <View style={styles.header}>
         <BackButton color="black" size={24} />
         <Text style={styles.title}>Redeem</Text>
-        <View style={{ width: 24 }} /> {/* Spacer to balance BackButton width */}
+        <View style={{ width: 24 }} /> 
       </View>
+      <RedeemList />
     </SafeAreaView>
   );
 }

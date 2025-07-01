@@ -5,11 +5,43 @@ import CheckoutButton from '@/components/order_cart/CheckoutButton';
 import TotalPrice from '@/components/order_cart/TotalPrice';
 import { Colors } from '../constants/Colors';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '@/context/AuthContext';
 import { router } from 'expo-router';
+import { supabase } from '@/lib/supabase';
 
 export default function MyOrderScreen() {
-  const { cart, totalPrice  } = useCart();
-  console.log('Cart items:', cart);
+  const { cart, totalPrice, clearCart, calculateItemPrice, totalPoints } = useCart();
+  const { profile, incrementLoyaltyLevel, addPoints } = useAuth();
+
+  const handleCheckout = async () => {
+    if (!profile) {
+      router.push('/login');
+      return;
+    }
+
+    const deliveryTime = new Date(Date.now() + 30 * 60 * 1000).toISOString();
+
+    const orderData = cart.map((item) => ({
+      user_id: profile.id,
+      coffee_name: item.name,
+      address: profile.address ?? 'N/A',
+      price: calculateItemPrice(item),
+      quantity: item.quantity ?? 1,
+      delivery_time: deliveryTime,
+    }));
+    const { error } = await supabase.from('orders').insert(orderData);
+
+    if (error) {
+      console.error('Error placing order:', error.message);
+      return;
+    }
+    await addPoints(Math.round(totalPoints));
+    incrementLoyaltyLevel();
+    clearCart();
+    console.log('Order placed successfully');
+    router.push('/order_success');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -24,12 +56,8 @@ export default function MyOrderScreen() {
         contentContainerStyle={{ paddingBottom: '20%' }}
       />
       <View style={styles.checkoutContainer}>
-        <TotalPrice 
-          value={totalPrice}  
-        />
-        <CheckoutButton
-          onPress={() => router.push('/order_success')}
-        />
+        <TotalPrice value={totalPrice} />
+        <CheckoutButton onPress={handleCheckout} />
       </View>
     </View>
   );
@@ -73,5 +101,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.themedBlue,
   },
-
 });

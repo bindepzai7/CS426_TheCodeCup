@@ -3,6 +3,7 @@ import LoyaltyCard from '../../components/home/loyaltyCard';
 import PointsInfoCard from '@/components/rewards/pointsInfoCard';
 import { Colors } from '../../constants/Colors';
 import { router } from 'expo-router';
+import HistoryReward from '@/components/rewards/RewardHistory';
 
 export default function Home() {
   return (
@@ -10,11 +11,11 @@ export default function Home() {
         <View style={styles.header}>
           <Text style={styles.title}>Rewards</Text>
         </View>
-        <LoyaltyCard current={3} total={8} />
+        <LoyaltyCard/>
         <PointsInfoCard
-          points={2750}
           onRedeem={() => router.push('/redeem')}
         />
+        <HistoryReward />
       </View>
   );
 }

@@ -8,21 +8,41 @@ import {
 } from 'react-native';
 import BackButton from '@/components/BackButton';
 import { Colors } from '../../constants/Colors';
+import { useAuth } from '@/context/AuthContext'; 
+import { supabase } from '@/lib/supabase';
+import HistoryList from '@/components/my_orders/HistoryList';
+import OngoingList from '@/components/my_orders/OngoingList';
 
 const { width } = Dimensions.get('window');
 
 export default function MyOrderScreen() {
   const [activeTab, setActiveTab] = useState<'On going' | 'History'>('On going');
+  const { profile } = useAuth();
+  const userId = profile?.id;
+
+  // Fetch orders based on userId
+  const fetchOrders = async () => {
+    if (!userId) return;
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .eq('user_id', userId);
+    if (error) {
+      console.error('Error fetching orders:', error);
+      return [];
+    }
+    return data;
+  }
+
+  
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.title}>My Order</Text>
-        <View style={{ width: 24 }} /> {/* To balance BackButton width */}
+        <View style={{ width: 24 }} />
       </View>
 
-      {/* Tabs */}
       <View style={styles.tabContainer}>
         {['On going', 'History'].map((tab) => (
           <Pressable
@@ -46,9 +66,9 @@ export default function MyOrderScreen() {
       {/* Content */}
       <View style={styles.content}>
         {activeTab === 'On going' ? (
-          <Text style={styles.placeholder}>You have ongoing orders.</Text>
+          <OngoingList />
         ) : (
-          <Text style={styles.placeholder}>No past orders found.</Text>
+          <HistoryList />
         )}
       </View>
     </View>

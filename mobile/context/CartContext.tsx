@@ -19,6 +19,8 @@ type CartContextType = {
   clearCart: () => void;
   totalPrice: number;
   calculateItemPrice: (item: CartItem) => number;
+  PointsAddedPerItem: (item: CartItem) => number;
+  totalPoints: number;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -39,19 +41,30 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const calculateItemPrice = (item: CartItem) => {
-    let price = item.price;
+    let price = item.price.toFixed(2) ? parseFloat(item.price.toFixed(2)) : item.price;
+    console.log('price before adjustments:', item.price);
     if (item.size === 'Medium') price += 0.5;
     else if (item.size === 'Large') price += 1.0;
     if (item.type === 'Cold') price += 0.3;
     if (item.shot === 'Double') price += 0.7;
-    return price * item.quantity;
+    console.log('Calculated price for item:', item.price, 'is', price);
+    return price * (item.quantity || 1);
   } 
 
   const totalPrice = cart.reduce((total, item) => total + calculateItemPrice(item), 0);
 
+  const PointsAddedPerItem = (item: CartItem) => {
+    let points = 0;
+    points = calculateItemPrice(item);
+    console.log('Points added per item:', points);
+    return 12 * points;
+  }
+
+  const totalPoints = cart.reduce((total, item) => total + PointsAddedPerItem(item), 0);
+
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, clearCart, totalPrice, calculateItemPrice }}
+      value={{ cart, addToCart, removeFromCart, clearCart, totalPrice, calculateItemPrice, PointsAddedPerItem, totalPoints }}
     >
       {children}
     </CartContext.Provider>

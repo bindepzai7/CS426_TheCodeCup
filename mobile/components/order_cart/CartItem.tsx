@@ -47,14 +47,14 @@ export default function CartItem({ item }: Props) {
           <View style={styles.details}>
             <Text style={styles.name}>{item.name}</Text>
             <Text style={styles.subtext}>
-              {`${item.shot.toLowerCase()} | ${item.type.toLowerCase()} | ${item.size.toLowerCase()} | ${
+              {`${item.shot.toLowerCase()} | ${item.type.toLowerCase()} | ${item.size.toLowerCase()} ${
                 item.type === 'Cold'
-                  ? item.ice === 1
-                    ? 'light ice'
+                  ?  item.ice === 1
+                    ? '| light ice'
                     : item.ice === 2
-                    ? 'medium ice'
-                    : 'full ice'
-                  : 'no ice'
+                    ? '| medium ice'
+                    : '| full ice'
+                  : ''
               }`}
             </Text>
             <Text style={styles.quantity}>x {item.quantity}</Text>

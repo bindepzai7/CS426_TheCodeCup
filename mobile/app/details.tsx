@@ -35,13 +35,8 @@ export default function CoffeeDetails() {
   const [type, setType] = useState<'Hot' | 'Cold'>('Cold');
   const [size, setSize] = useState<'Small' | 'Medium' | 'Large'>('Medium');
   const [iceLevel, setIceLevel] = useState<1 | 2 | 3>(2);
-
-  const parsedPrice =
-    typeof price === 'string'
-      ? parseFloat(price)
-      : Array.isArray(price) && typeof price[0] === 'string'
-      ? parseFloat(price[0])
-      : 0;
+  const parsedPrice = parseFloat(price as string);
+  console.log('Parsed Price:', parsedPrice);
 
   return (
     <SafeAreaView style={styles.container}>
