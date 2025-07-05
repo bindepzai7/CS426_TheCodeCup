@@ -30,8 +30,7 @@ export type Order = {
 export default function RewardHistoryList() {
     const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true);
-    const { profile } = useAuth();
-    const { PointsAddedPerItem} = useCart();
+    const { profile, user } = useAuth();
   
     useEffect(() => {
       const fetchOrders = async () => {
@@ -67,6 +66,7 @@ export default function RewardHistoryList() {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <Text style={styles.title}>Reward History</Text>
+         { user ? (
         <FlatList
           data={orders}
           keyExtractor={(item, index) => index.toString()}
@@ -87,12 +87,20 @@ export default function RewardHistoryList() {
           ItemSeparatorComponent={() => (
             <View style={styles.separator} />
           )}
+          
           ListFooterComponent={() => (
+            orders.length > 2 ? (
                                   <View style={styles.footer}>
                                       <Text style={styles.footerText}>End of history list</Text>
                                   </View>
+            ) : null
                               )}
         />
+                            ) : (
+            <Text style={{ textAlign: 'center', color: 'lightgray' }}>
+              Please sign in to view your reward history.
+            </Text>
+          )}
       </View>
     </SafeAreaView>
   );
@@ -113,7 +121,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 17,
     color: Colors.themedBlue,
-    marginBottom: 16,
+    fontWeight: '600',
+    marginBottom: '5%',
   },
   separator: {
     height: 1,

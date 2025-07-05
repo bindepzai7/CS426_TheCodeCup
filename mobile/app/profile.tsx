@@ -16,7 +16,7 @@ import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
 
 export default function Profiles() {
-  const { profile, user, loading, refreshProfile } = useAuth();
+  const { profile, user, loading, refreshProfile, logout } = useAuth();
 
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -115,10 +115,25 @@ export default function Profiles() {
         value={address}
         onChangeText={setAddress}
       />
+      {!user ? (
+        <Pressable
+          style={styles.signInButton}
+          onPress={() => router.push('/(auth)/login')}
+        >
+          <Text style={styles.signInButtonText}>Sign In</Text>
+        </Pressable>
+      ) : (
+        <Pressable
+          style={styles.signOutButton}
+          onPress={async () => {
+            await logout();           
+            router.replace('/');      
+          }}
+        >
+          <Text style={styles.signOutButtonText}>Sign Out</Text>
+        </Pressable>
+      )}
 
-      <Pressable style={styles.signInButton} onPress={() => router.push('/(auth)/login')}>
-        <Text style={styles.signInButtonText}>Sign In</Text>
-      </Pressable>
 
     </SafeAreaView>
   );
@@ -166,7 +181,7 @@ const styles = StyleSheet.create({
     color: Colors.themedBlue,
   },
   signInButton: {
-    marginTop: 32,
+    marginTop: '20%',
     backgroundColor: Colors.themedBlue,
     paddingVertical: 12,
     borderRadius: 20,
@@ -177,6 +192,21 @@ const styles = StyleSheet.create({
 
   signInButtonText: {
     color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  signOutButton: {
+    marginTop: '5%',
+    backgroundColor: 'lightgray',
+    paddingVertical: 12,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: '20%',
+  },
+
+  signOutButtonText: {
+    color: Colors.themedBlue,
     fontSize: 16,
     fontWeight: '600',
   },

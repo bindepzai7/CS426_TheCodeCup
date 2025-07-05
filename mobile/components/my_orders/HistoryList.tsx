@@ -51,7 +51,12 @@ export default function HistoryList() {
 
   return (
     <View style={styles.container}>
-      {loading ? (
+      {!profile ? (
+              <Text style={{ textAlign: 'center', color: 'gray', alignContent: 'center', marginTop: '50%' }}>
+                Please sign in to view your ongoing orders.
+              </Text>
+            ) :
+      loading ? (
               <Text style={styles.loading}>Loading...</Text>
             ) :
       orders.length === 0 ? (

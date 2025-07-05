@@ -52,7 +52,6 @@ export default function RedeemList() {
     else {
         setSelectedItem(item);
         setShowConfirmModal(true);
-        removePoints(item.points);  
     }
   }
 
@@ -72,9 +71,7 @@ export default function RedeemList() {
                             image_url={item.image_url}
                             dueDate={item.due_date}
                             points={item.points}
-                            onPress={() => 
-                                handleRedeem(item)
-                            }
+                            onPress={() => handleRedeem(item)}
                         />
                     )}
                     contentContainerStyle={styles.list}
@@ -104,7 +101,6 @@ export default function RedeemList() {
             points={selectedItem?.points || 0}
             onCancel={() => setShowConfirmModal(false)}
             onConfirm={() => {
-                console.log(`Confirmed redeem: ${selectedItem?.name}`);
                 setShowConfirmModal(false);
                 removePoints(selectedItem?.points || 0);
             }}

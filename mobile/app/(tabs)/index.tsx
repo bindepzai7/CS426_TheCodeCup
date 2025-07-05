@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import LoyaltyCard from '../../components/home/loyaltyCard';
 import CoffeeMenuCard from '../../components/home/coffeeCard';
@@ -6,7 +6,6 @@ import { Colors } from '../../constants/Colors';
 import { router } from 'expo-router';
 import { useAuth } from '@/context/AuthContext';
 
-const { width } = Dimensions.get('window');
 
 export default function App() {
   const { profile } = useAuth();

@@ -38,7 +38,6 @@ export default function MyOrderScreen() {
     await addPoints(Math.round(totalPoints));
     incrementLoyaltyLevel();
     clearCart();
-    console.log('Order placed successfully');
     router.push('/order_success');
   };
 
@@ -48,7 +47,11 @@ export default function MyOrderScreen() {
         <BackButton />
       </View>
       <Text style={styles.title}>My Cart</Text>
-
+      {cart.length === 0 && (
+        <Text style={{ textAlign: 'center', color: 'gray', marginTop: '50%', fontSize: 18 }}>
+          Your cart is empty.
+        </Text>
+      )}
       <FlatList
         data={cart}
         keyExtractor={(item) => item.id}

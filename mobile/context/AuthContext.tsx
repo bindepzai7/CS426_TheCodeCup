@@ -17,6 +17,7 @@ type AuthContextType = {
   profile: Profile | null;
   loading: boolean;
   refreshProfile: () => Promise<void>;
+  logout: () => Promise<void>;
   setProfile: React.Dispatch<React.SetStateAction<Profile | null>>;
   addPoints: (points: number) => Promise<void>;
   removePoints: (points: number) => Promise<void>;
@@ -34,6 +35,7 @@ const AuthContext = createContext<AuthContextType>({
   addPoints: async () => {},
   removePoints: async () => {},
   incrementLoyaltyLevel: async () => {},
+  logout: async () => {}
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -87,6 +89,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     loadProfile();
   }, [user]);
+
+  // Function to log out the user
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error('Error logging out:', error.message);
+    } else {
+      setSession(null);
+      setUser(null);
+      setProfile(null);
+    }
+  };
 
     const refreshProfile = async () => {
         if (!user) {
@@ -156,7 +170,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   return (
     <AuthContext.Provider
-        value={{ session, user, profile, loading, refreshProfile, setProfile, addPoints, removePoints, incrementLoyaltyLevel }}
+        value={{ session, user, profile, loading, refreshProfile, setProfile, addPoints, removePoints, incrementLoyaltyLevel, logout }}
             >
         {children}
     </AuthContext.Provider>

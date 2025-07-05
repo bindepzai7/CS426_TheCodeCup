@@ -3,9 +3,11 @@ import { CartProvider } from '../context/CartContext';
 import { AuthProvider } from '../context/AuthContext';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+
 export const unstable_settings = {
   initialRouteName: '(tabs)',
 };
+
 
 export default function RootLayout() {
   return (
@@ -16,7 +18,7 @@ export default function RootLayout() {
             <Stack.Screen name="(tabs)" />
           </Stack>
         </CartProvider>
-      </AuthProvider>
+        </AuthProvider>
     </GestureHandlerRootView>
   );
 }
