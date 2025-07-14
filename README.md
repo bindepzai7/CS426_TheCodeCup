@@ -5,4 +5,5 @@
 - Subject: CS426 - Mobile Device Application Development
 
 Tech: React Native, Expo, Supabase, ...
+
 Language: TypeScript, JavaScript
