@@ -4,6 +4,4 @@
 - Class: APCS23 - FIT (HCMUS - VNU)
 - Subject: CS426 - Mobile Device Application Development
 
-Tech: React Native, Expo, Supabase, ...
-
-Language: TypeScript, JavaScript
+Tech Stack: React Native (TypeScript), Expo, Supabase, and so on.
